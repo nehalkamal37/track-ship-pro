@@ -10,33 +10,156 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as ConsoleRouteImport } from './routes/_console'
+import { Route as LoginRouteImport } from './routes/login'
+import { Route as TrackRouteImport } from './routes/track'
+import { Route as ConsoleActivityRouteImport } from './routes/_console.activity'
+import { Route as ConsoleAtRiskRouteImport } from './routes/_console.at-risk'
+import { Route as ConsoleDashboardRouteImport } from './routes/_console.dashboard'
+import { Route as ConsoleMerchantsRouteImport } from './routes/_console.merchants'
+import { Route as ConsoleShipmentsIndexRouteImport } from './routes/_console.shipments.index'
+import { Route as ConsoleShipmentsShipmentIdRouteImport } from './routes/_console.shipments.$shipmentId'
+import { Route as ConsoleShipmentsNewRouteImport } from './routes/_console.shipments.new'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ConsoleRoute = ConsoleRouteImport.update({
+  id: '/_console',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const LoginRoute = LoginRouteImport.update({
+  id: '/login',
+  path: '/login',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const TrackRoute = TrackRouteImport.update({
+  id: '/track',
+  path: '/track',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ConsoleActivityRoute = ConsoleActivityRouteImport.update({
+  id: '/activity',
+  path: '/activity',
+  getParentRoute: () => ConsoleRoute,
+} as any)
+const ConsoleAtRiskRoute = ConsoleAtRiskRouteImport.update({
+  id: '/at-risk',
+  path: '/at-risk',
+  getParentRoute: () => ConsoleRoute,
+} as any)
+const ConsoleDashboardRoute = ConsoleDashboardRouteImport.update({
+  id: '/dashboard',
+  path: '/dashboard',
+  getParentRoute: () => ConsoleRoute,
+} as any)
+const ConsoleMerchantsRoute = ConsoleMerchantsRouteImport.update({
+  id: '/merchants',
+  path: '/merchants',
+  getParentRoute: () => ConsoleRoute,
+} as any)
+const ConsoleShipmentsIndexRoute = ConsoleShipmentsIndexRouteImport.update({
+  id: '/shipments/',
+  path: '/shipments/',
+  getParentRoute: () => ConsoleRoute,
+} as any)
+const ConsoleShipmentsShipmentIdRoute =
+  ConsoleShipmentsShipmentIdRouteImport.update({
+    id: '/shipments/$shipmentId',
+    path: '/shipments/$shipmentId',
+    getParentRoute: () => ConsoleRoute,
+  } as any)
+const ConsoleShipmentsNewRoute = ConsoleShipmentsNewRouteImport.update({
+  id: '/shipments/new',
+  path: '/shipments/new',
+  getParentRoute: () => ConsoleRoute,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/login': typeof LoginRoute
+  '/track': typeof TrackRoute
+  '/activity': typeof ConsoleActivityRoute
+  '/at-risk': typeof ConsoleAtRiskRoute
+  '/dashboard': typeof ConsoleDashboardRoute
+  '/merchants': typeof ConsoleMerchantsRoute
+  '/shipments/$shipmentId': typeof ConsoleShipmentsShipmentIdRoute
+  '/shipments/new': typeof ConsoleShipmentsNewRoute
+  '/shipments/': typeof ConsoleShipmentsIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/login': typeof LoginRoute
+  '/track': typeof TrackRoute
+  '/activity': typeof ConsoleActivityRoute
+  '/at-risk': typeof ConsoleAtRiskRoute
+  '/dashboard': typeof ConsoleDashboardRoute
+  '/merchants': typeof ConsoleMerchantsRoute
+  '/shipments/$shipmentId': typeof ConsoleShipmentsShipmentIdRoute
+  '/shipments/new': typeof ConsoleShipmentsNewRoute
+  '/shipments': typeof ConsoleShipmentsIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/_console': typeof ConsoleRouteWithChildren
+  '/login': typeof LoginRoute
+  '/track': typeof TrackRoute
+  '/_console/activity': typeof ConsoleActivityRoute
+  '/_console/at-risk': typeof ConsoleAtRiskRoute
+  '/_console/dashboard': typeof ConsoleDashboardRoute
+  '/_console/merchants': typeof ConsoleMerchantsRoute
+  '/_console/shipments/$shipmentId': typeof ConsoleShipmentsShipmentIdRoute
+  '/_console/shipments/new': typeof ConsoleShipmentsNewRoute
+  '/_console/shipments/': typeof ConsoleShipmentsIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/'
+  fullPaths:
+    | '/'
+    | '/login'
+    | '/track'
+    | '/activity'
+    | '/at-risk'
+    | '/dashboard'
+    | '/merchants'
+    | '/shipments/$shipmentId'
+    | '/shipments/new'
+    | '/shipments/'
   fileRoutesByTo: FileRoutesByTo
-  to: '/'
-  id: '__root__' | '/'
+  to:
+    | '/'
+    | '/login'
+    | '/track'
+    | '/activity'
+    | '/at-risk'
+    | '/dashboard'
+    | '/merchants'
+    | '/shipments/$shipmentId'
+    | '/shipments/new'
+    | '/shipments'
+  id:
+    | '__root__'
+    | '/'
+    | '/_console'
+    | '/login'
+    | '/track'
+    | '/_console/activity'
+    | '/_console/at-risk'
+    | '/_console/dashboard'
+    | '/_console/merchants'
+    | '/_console/shipments/$shipmentId'
+    | '/_console/shipments/new'
+    | '/_console/shipments/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  ConsoleRoute: typeof ConsoleRouteWithChildren
+  LoginRoute: typeof LoginRoute
+  TrackRoute: typeof TrackRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -48,22 +171,108 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/_console': {
+      id: '/_console'
+      path: ''
+      fullPath: '/'
+      preLoaderRoute: typeof ConsoleRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/login': {
+      id: '/login'
+      path: '/login'
+      fullPath: '/login'
+      preLoaderRoute: typeof LoginRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/track': {
+      id: '/track'
+      path: '/track'
+      fullPath: '/track'
+      preLoaderRoute: typeof TrackRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/_console/activity': {
+      id: '/_console/activity'
+      path: '/activity'
+      fullPath: '/activity'
+      preLoaderRoute: typeof ConsoleActivityRouteImport
+      parentRoute: typeof ConsoleRoute
+    }
+    '/_console/at-risk': {
+      id: '/_console/at-risk'
+      path: '/at-risk'
+      fullPath: '/at-risk'
+      preLoaderRoute: typeof ConsoleAtRiskRouteImport
+      parentRoute: typeof ConsoleRoute
+    }
+    '/_console/dashboard': {
+      id: '/_console/dashboard'
+      path: '/dashboard'
+      fullPath: '/dashboard'
+      preLoaderRoute: typeof ConsoleDashboardRouteImport
+      parentRoute: typeof ConsoleRoute
+    }
+    '/_console/merchants': {
+      id: '/_console/merchants'
+      path: '/merchants'
+      fullPath: '/merchants'
+      preLoaderRoute: typeof ConsoleMerchantsRouteImport
+      parentRoute: typeof ConsoleRoute
+    }
+    '/_console/shipments/': {
+      id: '/_console/shipments/'
+      path: '/shipments'
+      fullPath: '/shipments/'
+      preLoaderRoute: typeof ConsoleShipmentsIndexRouteImport
+      parentRoute: typeof ConsoleRoute
+    }
+    '/_console/shipments/$shipmentId': {
+      id: '/_console/shipments/$shipmentId'
+      path: '/shipments/$shipmentId'
+      fullPath: '/shipments/$shipmentId'
+      preLoaderRoute: typeof ConsoleShipmentsShipmentIdRouteImport
+      parentRoute: typeof ConsoleRoute
+    }
+    '/_console/shipments/new': {
+      id: '/_console/shipments/new'
+      path: '/shipments/new'
+      fullPath: '/shipments/new'
+      preLoaderRoute: typeof ConsoleShipmentsNewRouteImport
+      parentRoute: typeof ConsoleRoute
+    }
   }
 }
 
+interface ConsoleRouteChildren {
+  ConsoleActivityRoute: typeof ConsoleActivityRoute
+  ConsoleAtRiskRoute: typeof ConsoleAtRiskRoute
+  ConsoleDashboardRoute: typeof ConsoleDashboardRoute
+  ConsoleMerchantsRoute: typeof ConsoleMerchantsRoute
+  ConsoleShipmentsShipmentIdRoute: typeof ConsoleShipmentsShipmentIdRoute
+  ConsoleShipmentsNewRoute: typeof ConsoleShipmentsNewRoute
+  ConsoleShipmentsIndexRoute: typeof ConsoleShipmentsIndexRoute
+}
+
+const ConsoleRouteChildren: ConsoleRouteChildren = {
+  ConsoleActivityRoute: ConsoleActivityRoute,
+  ConsoleAtRiskRoute: ConsoleAtRiskRoute,
+  ConsoleDashboardRoute: ConsoleDashboardRoute,
+  ConsoleMerchantsRoute: ConsoleMerchantsRoute,
+  ConsoleShipmentsShipmentIdRoute: ConsoleShipmentsShipmentIdRoute,
+  ConsoleShipmentsNewRoute: ConsoleShipmentsNewRoute,
+  ConsoleShipmentsIndexRoute: ConsoleShipmentsIndexRoute,
+}
+
+const ConsoleRouteWithChildren =
+  ConsoleRoute._addFileChildren(ConsoleRouteChildren)
+
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  ConsoleRoute: ConsoleRouteWithChildren,
+  LoginRoute: LoginRoute,
+  TrackRoute: TrackRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
   ._addFileTypes<FileRouteTypes>()
-
-import type { getRouter } from './router.tsx'
-import type { startInstance } from './start.ts'
-declare module '@tanstack/react-start' {
-  interface Register {
-    ssr: true
-    router: Awaited<ReturnType<typeof getRouter>>
-    config: Awaited<ReturnType<typeof startInstance.getOptions>>
-  }
-}
