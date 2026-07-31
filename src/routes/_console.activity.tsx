@@ -146,7 +146,7 @@ function ActivityPage() {
                         <TableCell className="whitespace-nowrap text-muted-foreground">
                           {entry.entityType} {entry.entityId}
                         </TableCell>
-                        <TableCell className="max-w-[320px] truncate text-muted-foreground">{entry.details}</TableCell>
+                        <TableCell className="max-w-[320px] truncate text-muted-foreground">{entry.description}</TableCell>
                       </TableRow>
                     ))
                   )}
