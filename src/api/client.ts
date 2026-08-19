@@ -24,14 +24,41 @@ export async function mockResponse<T>(factory: () => T, ms?: number): Promise<T>
   return factory();
 }
 
+//token
+const TOKEN_KEY = "trackflow.token";
+
+export function getAccessToken() {
+  if (typeof window === "undefined") return null;
+
+  return window.localStorage.getItem(TOKEN_KEY) ?? window.sessionStorage.getItem(TOKEN_KEY);
+}
+
 /** Reserved for the real HTTP implementation. */
+// export async function request<T>(path: string, init?: RequestInit): Promise<T> {
+//   const response = await fetch(`${API_BASE_URL}${path}`, {
+//     headers: { "Content-Type": "application/json", ...(init?.headers ?? {}) },
+//     ...init,
+//   });
+//   if (!response.ok) {
+//     throw new ApiError(await response.text(), response.status);
+//   }
+//   return (await response.json()) as T;
+// }
 export async function request<T>(path: string, init?: RequestInit): Promise<T> {
+  const token = getAccessToken();
+
   const response = await fetch(`${API_BASE_URL}${path}`, {
-    headers: { "Content-Type": "application/json", ...(init?.headers ?? {}) },
     ...init,
+    headers: {
+      "Content-Type": "application/json",
+      ...(token ? { Authorization: `Bearer ${token}` } : {}),
+      ...(init?.headers ?? {}),
+    },
   });
+
   if (!response.ok) {
     throw new ApiError(await response.text(), response.status);
   }
+
   return (await response.json()) as T;
 }

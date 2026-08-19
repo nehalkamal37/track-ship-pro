@@ -5,7 +5,7 @@ import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 
-import { DEMO_CREDENTIALS } from "@/api/authApi";
+// import { DEMO_CREDENTIALS } from "@/api/authApi";
 import { Alert, AlertDescription } from "@/components/ui/alert";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
@@ -168,11 +168,11 @@ function LoginPage() {
               </form>
             </Form>
 
-            <div className="mt-5 rounded-md border border-border bg-muted/50 p-3 text-xs text-muted-foreground">
+            {/* <div className="mt-5 rounded-md border border-border bg-muted/50 p-3 text-xs text-muted-foreground">
               <p className="font-medium text-foreground">Prototype credentials</p>
               <p className="mt-1 font-mono">{DEMO_CREDENTIALS.email} / {DEMO_CREDENTIALS.password}</p>
               <p className="mt-1">operator@trackflow.io and merchant@trackflow.io use the same password.</p>
-            </div>
+            </div> */}
           </CardContent>
         </Card>
 
